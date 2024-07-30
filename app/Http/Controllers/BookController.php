@@ -30,7 +30,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = new Student();
+        $book = new book();
         $book->Title = $request['Title'];
         $book->Author = $request['Title'];
         $book->Description = $request['Description'];
@@ -38,7 +38,15 @@ class BookController extends Controller
         $book->PublishedYear = $request['Published Year'];
         $book->save();
 
-        return redirect()->to('book');
+        $request ->validate([
+
+            'Title' => 'required',
+            'Description' => 'required',
+            'ISBN' => 'required',
+            'Published Year' => 'required|date'
+        ]);
+
+        return back() ->with('success', 'Data saved Successfuly');
     }
 
     /**
